@@ -179,9 +179,9 @@ export default function EditArticlePage() {
 
       <button
         onClick={handleDelete}
-        className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-blue-700"
+        className="ml-4 px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-blue-700"
       >
-        Update Article
+        Delete Article
       </button>
     </div>
   );
