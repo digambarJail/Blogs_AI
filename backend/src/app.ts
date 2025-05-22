@@ -13,7 +13,7 @@ dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin: 'https://blogs-ai-sable.vercel.app/',
+    origin: 'https://blogs-ai-sable.vercel.app',
     credentials: true, // 👈 allows cookies to be sent
   })
 );
