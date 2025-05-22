@@ -5,7 +5,14 @@ A modern blog platform powered by Gemini AI, featuring role-based access control
 ## 🚀 Project Setup
 
 1. **Install dependencies**
+
 ```bash
+# Backend
+cd backend
+npm install
+
+# Frontend
+cd ../ai-blog-frontend
 npm install
 ```
 
