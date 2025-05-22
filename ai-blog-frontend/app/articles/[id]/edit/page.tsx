@@ -1,15 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import axios from 'axios';
 
-interface Props {
-  params: { id: string };
-}
-
-export default function EditArticlePage({ params }: Props) {
-  const { id } = useParams(); // Get dynamic route param
+export default function EditArticlePage() {
+  const { id } = useParams();
   const router = useRouter();
 
   const [title, setTitle] = useState('');
@@ -20,7 +16,7 @@ export default function EditArticlePage({ params }: Props) {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    if (!id) return;
+    if (!id || typeof id !== 'string') return;
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/articles/${id}`, { withCredentials: true })
       .then((res) => {
@@ -32,7 +28,6 @@ export default function EditArticlePage({ params }: Props) {
       .finally(() => setLoading(false));
   }, [id]);
 
-  // AI handlers same as create page
   const handleSuggestTitle = async () => {
     if (!content.trim()) {
       setMessage('Please enter content to suggest a title.');
@@ -106,69 +101,68 @@ export default function EditArticlePage({ params }: Props) {
 
   return (
     <div>
-  <h1 className="text-3xl font-bold mb-6 text-gray-900">Edit Article</h1>
+      <h1 className="text-3xl font-bold mb-6 text-gray-900">Edit Article</h1>
 
-  {message && <p className="mb-4 text-sm text-red-600">{message}</p>}
+      {message && <p className="mb-4 text-sm text-red-600">{message}</p>}
 
-  <input
-    type="text"
-    placeholder="Title"
-    value={title}
-    onChange={e => setTitle(e.target.value)}
-    className="block w-full mb-4 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-  />
+      <input
+        type="text"
+        placeholder="Title"
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+        className="block w-full mb-4 border border-gray-300 rounded-lg px-4 py-2"
+      />
 
-  <textarea
-    placeholder="Content"
-    value={content}
-    onChange={e => setContent(e.target.value)}
-    rows={10}
-    className="block w-full mb-4 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-  />
+      <textarea
+        placeholder="Content"
+        value={content}
+        onChange={e => setContent(e.target.value)}
+        rows={10}
+        className="block w-full mb-4 border border-gray-300 rounded-lg px-4 py-2"
+      />
 
-  <select
-    value={status}
-    onChange={e => setStatus(e.target.value as 'draft' | 'published' | 'archived')}
-    className="block w-full mb-6 border border-gray-300 rounded-lg px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-  >
-    <option value="draft">Draft</option>
-    <option value="published">Published</option>
-    <option value="archived">Archived</option>
-  </select>
+      <select
+        value={status}
+        onChange={e => setStatus(e.target.value as 'draft' | 'published' | 'archived')}
+        className="block w-full mb-6 border border-gray-300 rounded-lg px-4 py-2 bg-white"
+      >
+        <option value="draft">Draft</option>
+        <option value="published">Published</option>
+        <option value="archived">Archived</option>
+      </select>
 
-  <div className="space-x-2 mb-6">
-    <button
-      disabled={loadingAI}
-      onClick={handleSuggestTitle}
-      className="px-4 py-2 rounded-lg bg-purple-100 text-purple-700 hover:bg-purple-200 disabled:opacity-50 transition"
-    >
-      Suggest Title
-    </button>
+      <div className="space-x-2 mb-6">
+        <button
+          disabled={loadingAI}
+          onClick={handleSuggestTitle}
+          className="px-4 py-2 rounded-lg bg-purple-100 text-purple-700 hover:bg-purple-200"
+        >
+          Suggest Title
+        </button>
 
-    <button
-      disabled={loadingAI}
-      onClick={handleSummarize}
-      className="px-4 py-2 rounded-lg bg-yellow-100 text-yellow-800 hover:bg-yellow-200 disabled:opacity-50 transition"
-    >
-      Summarize Content
-    </button>
+        <button
+          disabled={loadingAI}
+          onClick={handleSummarize}
+          className="px-4 py-2 rounded-lg bg-yellow-100 text-yellow-800 hover:bg-yellow-200"
+        >
+          Summarize Content
+        </button>
 
-    <button
-      disabled={loadingAI}
-      onClick={handleImproveText}
-      className="px-4 py-2 rounded-lg bg-blue-100 text-blue-700 hover:bg-blue-200 disabled:opacity-50 transition"
-    >
-      Improve Writing
-    </button>
-  </div>
+        <button
+          disabled={loadingAI}
+          onClick={handleImproveText}
+          className="px-4 py-2 rounded-lg bg-blue-100 text-blue-700 hover:bg-blue-200"
+        >
+          Improve Writing
+        </button>
+      </div>
 
-  <button
-    onClick={handleUpdate}
-    className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
-  >
-    Update Article
-  </button>
-</div>
-
+      <button
+        onClick={handleUpdate}
+        className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+      >
+        Update Article
+      </button>
+    </div>
   );
 }
