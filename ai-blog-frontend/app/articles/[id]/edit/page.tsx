@@ -97,6 +97,19 @@ export default function EditArticlePage() {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/articles/${id}`,
+        { withCredentials: true }
+      );
+      setMessage('Article deleted.');
+      router.push('/dashboard');
+    } catch {
+      setMessage('Failed to delete article.');
+    }
+  };
+
   if (loading) return <p>Loading...</p>;
 
   return (
@@ -160,6 +173,13 @@ export default function EditArticlePage() {
       <button
         onClick={handleUpdate}
         className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+      >
+        Update Article
+      </button>
+
+      <button
+        onClick={handleDelete}
+        className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-blue-700"
       >
         Update Article
       </button>
