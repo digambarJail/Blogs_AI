@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { User } from '../models/userModel';
 import { hashPassword, comparePasswords } from '../utils/passwordUtils';
 import jwt from 'jsonwebtoken';
+import { Article } from '../models/articleModel';
 
 // Register new user
 export const registerUser = async (req: Request, res: Response) => {
@@ -77,7 +78,11 @@ export const updateUserRole = async (req: Request, res: Response) => {
 // Delete user (Admin only)
 export const deleteUser = async (req: Request, res: Response) => {
   try {
+    const userId = req.params.id;
+
+    await Article.deleteMany({ author: userId });
     await User.findByIdAndDelete(req.params.id);
+    
     res.status(204).send();
   } catch {
     res.status(500).json({ error: 'Delete failed' });
