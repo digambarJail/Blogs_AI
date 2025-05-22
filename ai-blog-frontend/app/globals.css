@@ -1,0 +1,46 @@
+ @import "tailwindcss";
+/* Font and layout base improvements */
+html {
+  scroll-behavior: smooth;
+  font-feature-settings: "kern";
+}
+
+body {
+  @apply bg-gray-50 text-gray-900 antialiased font-sans;
+}
+
+/* Remove default focus outlines and replace with accessible ring */
+:focus {
+  outline: none;
+  @apply ring-2 ring-blue-500 ring-offset-2;
+}
+
+/* Custom link styles */
+a {
+  @apply transition-colors duration-200 ease-in-out;
+}
+
+/* Heading improvements */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-semibold text-gray-900;
+}
+
+/* Paragraph improvements */
+p {
+  @apply leading-relaxed text-gray-700;
+}
+
+/* Buttons (optional global style if you use <button> elements) */
+button {
+  @apply px-4 py-2 rounded text-sm font-medium transition;
+}
+
+/* Smooth card hover */
+.card-hover {
+  @apply hover:shadow-md transition-shadow duration-200 ease-in-out;
+}
+
+/* Utility class for container width */
+.container {
+  @apply max-w-4xl mx-auto px-4;
+}
